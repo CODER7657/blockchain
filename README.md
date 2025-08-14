@@ -1,148 +1,134 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-</head>
-<body>
+# Blockchain Certificate DApp
 
-  <h1>Blockchain Certificate DApp</h1>
-  <p>A decentralized platform for issuing and verifying digital certificates on the Polygon Amoy testnet.<br>
-  Built with Solidity, React.js, and ethers.js—using MetaMask for wallet-based authentication and transaction signing.</p>
+A decentralized platform for issuing and verifying digital certificates on the Polygon Amoy testnet.
+Built with Solidity, React.js, and ethers.js—using MetaMask for wallet-based authentication and transaction signing.
 
-  <h2>Table of Contents</h2>
-  <ul>
-    <li><a href="#overview">Overview</a></li>
-    <li><a href="#smart-contract-features">Smart Contract Features</a></li>
-    <li><a href="#frontend-architecture">Frontend Architecture</a></li>
-    <li><a href="#installation-setup">Installation &amp; Setup</a></li>
-    <li><a href="#how-to-run-the-project">How to Run the Project</a></li>
-    <li><a href="#usage-flow">Usage Flow</a></li>
-    <li><a href="#security-notes">Security Notes</a></li>
-    <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#license">License</a></li>
-  </ul>
+## Table of Contents
 
-  <h2 id="overview">Overview</h2>
-  <p>
-    This DApp enables secure, on-chain certificate issuing and public validation for organizations.<br>
-    It works on Polygon Amoy testnet and uses MetaMask exclusively for signing transactions.
-  </p>
-  <ul>
-    <li>Smart contract (VeriServe) securely stores certificates</li>
-    <li>React frontend with protected admin panel and verification page</li>
-    <li>MetaMask wallet integration—no private keys are ever stored or exposed in code</li>
-  </ul>
+- [Overview](#overview)
+- [Smart Contract Features](#smart-contract-features)
+- [Frontend Architecture](#frontend-architecture)
+- [Installation & Setup](#installation-setup)
+- [How to Run the Project](#how-to-run-the-project)
+- [Usage Flow](#usage-flow)
+- [Security Notes](#security-notes)
+- [Contributing](#contributing)
+- [License](#license)
 
-  <h2 id="smart-contract-features">Smart Contract Features (<code>VeriServe.sol</code>)</h2>
-  <ul>
-    <li><b>Issue certificates:</b> Add a certificate with a unique ID, hash, and recipient address</li>
-    <li><b>Public verification:</b> Anyone can check a certificate by ID plus hash (returns true/false)</li>
-    <li><b>Immutable record:</b> All certificates stored on-chain for auditability</li>
-  </ul>
-  <table border="1">
-    <tr><th>Function</th><th>Purpose</th></tr>
-    <tr><td><code>issueCertificate(_certId, _certHash, _to)</code></td><td>Issues new certificate</td></tr>
-    <tr><td><code>verifyCertificate(_certId, _certHash)</code></td><td>Checks validity of a certificate</td></tr>
-    <tr><td><code>certificates(_certId)</code></td><td>Returns details for given cert ID</td></tr>
-  </table>
+## Overview
 
-  <h2 id="frontend-architecture">Frontend Architecture</h2>
-  <ul>
-    <li><b>App.js:</b> Routing, navbar, session logic (admin/public separation)</li>
-    <li><b>Login.js:</b> Password authentication for admin ("admin123" for demo)</li>
-    <li><b>CertificateForm.js:</b> Admin-only, issues certificates via MetaMask signing</li>
-    <li><b>IssuedList.js:</b> Displays locally issued certificates (from browser session)</li>
-    <li><b>VerifyCertificate.js:</b> Public page for on-chain certificate verification</li>
-    <li><b>WalletConnect.js:</b> Handles MetaMask connection in UI</li>
-    <li><b>config.js:</b> Deployed contract address and ABI for Polygon Amoy</li>
-  </ul>
+This DApp enables secure, on-chain certificate issuing and public validation for organizations.
+It works on Polygon Amoy testnet and uses MetaMask exclusively for signing transactions.
 
-  <h3>Network Configuration</h3>
-  <ul>
-    <li><b>Testnet:</b> Polygon Amoy (chainId: 80002)</li>
-    <li><b>RPC URL:</b> https://rpc-amoy.polygon.technology/</li>
-    <li><b>Block Explorer:</b> <a href="https://amoy.polygonscan.com/">Amoy Polygonscan</a></li>
-    <li><b>Contract Address:</b> <i>Update with your latest deployment!</i></li>
-  </ul>
+- **Smart contract (VeriServe)** securely stores certificates
+- **React frontend** with protected admin panel and verification page
+- **MetaMask wallet integration**—no private keys are ever stored or exposed in code
 
-  <h2 id="installation-setup">Installation & Setup</h2>
-  <ol>
-    <li><b>Clone the Repository:</b><br>
-      <code>git clone https://github.com/CODER7657/blockchain.git</code><br>
-      <code>cd blockchain</code>
-    </li>
-    <li><b>Install Project Dependencies:</b><br>
-      <code>npm install</code>
-    </li>
-    <li><b>Deploy the Smart Contract:</b><br>
-      Use Hardhat or Remix with Polygon Amoy.<br>
-      Update <code>config.js</code> with your contract address and ABI.
-    </li>
-    <li><b>Add Polygon Amoy to MetaMask:</b><br>
-      Network Name: Polygon Amoy Testnet<br>
-      RPC: <code>https://rpc-amoy.polygon.technology/</code><br>
-      Chain ID: <code>80002</code><br>
-      Currency: <code>MATIC</code><br>
-      Block Explorer: <code>https://amoy.polygonscan.com/</code><br>
-      Request MATIC from <a href="https://faucet.polygon.technology/">Polygon Faucet</a>
-    </li>
-  </ol>
+## Smart Contract Features (VeriServe.sol)
 
-  <h2 id="how-to-run-the-project">How to Run the Project</h2>
-  <ol>
-    <li><b>Start the Frontend:</b>
-      <pre><code>npm start</code></pre>
-      App runs at <code>http://localhost:3000</code>
-    </li>
-    <li><b>Connect MetaMask:</b>
-      <ul>
-        <li>Ensure MetaMask is set to Polygon Amoy</li>
-        <li>Approve wallet connection requests prompted by the app</li>
-      </ul>
-    </li>
-    <li><b>Admin Login &amp; Certificate Issuance:</b>
-      <ul>
-        <li>Login (password: <code>admin123</code> for demo)</li>
-        <li>Issue certificates via web form; MetaMask will sign transactions</li>
-      </ul>
-    </li>
-    <li><b>Verification:</b>
-      <ul>
-        <li>Open <code>/verify</code> page and input certificate details to validate</li>
-      </ul>
-    </li>
-  </ol>
+- **Issue certificates:** Add a certificate with a unique ID, hash, and recipient address
+- **Public verification:** Anyone can check a certificate by ID plus hash (returns true/false)
+- **Immutable record:** All certificates stored on-chain for auditability
 
-  <h2 id="usage-flow">Usage Flow</h2>
-  <h3>Admin</h3>
-  <ul>
-    <li>Login via main page</li>
-    <li>Connect MetaMask</li>
-    <li>Issue certificates (MetaMask signing required)</li>
-    <li>View session-issued certificates (local table)</li>
-  </ul>
+| Function | Purpose |
+|----------|----------|
+| `issueCertificate(_certId, _certHash, _to)` | Issues new certificate |
+| `verifyCertificate(_certId, _certHash)` | Checks validity of a certificate |
+| `certificates(_certId)` | Returns details for given cert ID |
 
-  <h3>Public</h3>
-  <ul>
-    <li>Open <code>/verify</code></li>
-    <li>Enter certificate ID and hash</li>
-    <li>Instant authentic/invalid result using blockchain contract</li>
-  </ul>
+## Frontend Architecture
 
-  <h2 id="security-notes">Security Notes</h2>
-  <ul>
-    <li><b>No private keys are stored or exposed anywhere in the code.</b></li>
-    <li>MetaMask is required for signing all transactions and certificate operations.</li>
-    <li>Demo admin password ("admin123")—replace with secure authentication for real deployments.</li>
-    <li>Local certificate table is only for convenience; use contract for true auditing.</li>
-    <li>Smart contract currently allows open certificate issuance—add access control before deploying on mainnet.</li>
-  </ul>
+- **App.js:** Routing, navbar, session logic (admin/public separation)
+- **Login.js:** Password authentication for admin ("admin123" for demo)
+- **CertificateForm.js:** Admin-only, issues certificates via MetaMask signing
+- **IssuedCertificates.js:** Displays locally issued certificates (from browser session)
+- **VerifyCertificate.js:** Public page for on-chain certificate verification
+- **WalletConnect.js:** Handles MetaMask connection in UI
+- **config.js:** Deployed contract address and ABI for Polygon Amoy
 
-  <h2 id="contributing">Contributing</h2>
-  <p>Contributions and suggestions are welcome! Open issues or submit PRs to enhance features, documentation, or security.</p>
+### Network Configuration
 
-  <h2 id="license">License</h2>
-  <pre>
+- **Testnet:** Polygon Amoy (chainId: 80002)
+- **RPC URL:** https://rpc-amoy.polygon.technology/
+- **Block Explorer:** [Amoy Polygonscan](https://amoy.polygonscan.com/)
+- **Contract Address:** Update with your latest deployment!
+- **Test MATIC:** Get from [Polygon Faucet](https://faucet.polygon.technology/) for Amoy network
+
+## Installation & Setup
+
+1. **Clone the Repository:**
+   ```bash
+   git clone https://github.com/CODER7657/VeriServe_block.git
+   cd VeriServe_block
+   ```
+
+2. **Install Project Dependencies:**
+   ```bash
+   npm install
+   ```
+
+3. **Deploy the Smart Contract:**
+   - Use Remix or Hardhat to deploy on Polygon Amoy testnet
+   - After deploying the smart contract, update `config.js`:
+     - Place the ABI JSON for the deployed contract in `config.js` or import from artifacts
+     - Set `contractAddress` to your deployed Polygon Amoy address
+
+4. **Add Polygon Amoy to MetaMask:**
+   - Network Name: Polygon Amoy Testnet
+   - RPC: https://rpc-amoy.polygon.technology/
+   - Chain ID: 80002
+   - Currency: MATIC
+   - Block Explorer: https://amoy.polygonscan.com/
+   - Request MATIC from [Polygon Faucet](https://faucet.polygon.technology/)
+
+## How to Run the Project
+
+1. **Start the Frontend:**
+   ```bash
+   npm start
+   ```
+   App runs at http://localhost:3000
+
+2. **Connect MetaMask:**
+   - Ensure MetaMask is set to Polygon Amoy
+   - Approve wallet connection requests prompted by the app
+
+3. **Admin Login & Certificate Issuance:**
+   - Login (password: admin123 for demo)
+   - Issue certificates via web form; MetaMask will sign transactions
+
+4. **Verification:**
+   - Open /verify page and input certificate details to validate
+
+## Usage Flow
+
+### Admin
+
+- Login via main page
+- Connect MetaMask
+- Issue certificates (MetaMask signing required)
+- View session-issued certificates (local table)
+
+### Public
+
+- Open /verify
+- Enter certificate ID and hash
+- Instant authentic/invalid result using blockchain contract
+
+## Security Notes
+
+- No private keys are stored or exposed anywhere in the code.
+- MetaMask is required for signing all transactions and certificate operations.
+- Demo admin password ("admin123")—replace with secure authentication for real deployments.
+- Local certificate table is only for convenience; use contract for true auditing.
+- Smart contract currently allows open certificate issuance—add access control before deploying on mainnet.
+
+## Contributing
+
+Contributions and suggestions are welcome! Open issues or submit PRs to enhance features, documentation, or security.
+
+## License
+
 MIT License
 
 Copyright (c) 2024 CODER7657
@@ -154,8 +140,8 @@ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 copies of the Software, and to permit persons to whom the Software is
 furnished to do so, subject to the following conditions:
 
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -164,7 +150,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
-  </pre>
-
-</body>
-</html>
